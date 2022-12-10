@@ -19,7 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize Database
-database = SQLAlchemy(app)
+data = SQLAlchemy(app)
 
 
 # Initialize
@@ -27,18 +27,18 @@ database = SQLAlchemy(app)
 
 
 # table user
-class User(UserMixin, database.Model):
-    user_id = database.Column(database.Integer, primary_key=True)
-    name = database.Column(database.String(50), nullable=False)
-    user_email = database.Column(database.String(60), nullable=False, unique=True)
-    user_password = database.Column(database.String(250), nullable=False)
-    is_admin = database.Column(database.Boolean, nullable=False, default=False)
-    user_image = database.Column(database.String(250), nullable=False)
-    user_birthdate = database.Column(database.String(50), nullable=True)
-    lastLogin = database.Column(database.String(50), nullable=True, default=False)
-    user_state = database.Column(database.String(50), nullable=False, default="Active")  # active, deactivate, blocked
-    isOnline = database.Column(database.Boolean, nullable=False, default=False)
-    user_video = database.relationship("Video", backref='user')
+class User(UserMixin, data.Model):
+    user_id = data.Column(data.Integer, primary_key=True)
+    name = data.Column(data.String(50), nullable=False)
+    user_email = data.Column(data.String(60), nullable=False, unique=True)
+    user_password = data.Column(data.String(250), nullable=False)
+    is_admin = data.Column(data.Boolean, nullable=False, default=False)
+    user_image = data.Column(data.String(250), nullable=False)
+    user_birthdate = data.Column(data.String(50), nullable=True)
+    lastLogin = data.Column(data.String(50), nullable=True, default=False)
+    user_state = data.Column(data.String(50), nullable=False, default="Active")  # active, deactivate, blocked
+    isOnline = data.Column(data.Boolean, nullable=False, default=False)
+    user_video = data.relationship("Video", backref='user')
 
     # constructor to initialize the data
     def __init__(self, user_name, user_email, user_password, user_image, user_birthdate):
@@ -60,13 +60,13 @@ class User(UserMixin, database.Model):
     #     db.session.commit()
 
 
-class Video(database.Model):
-    video_id = database.Column(database.Integer, primary_key=True)
-    video_title = database.Column(database.String(100), nullable=False)
-    video_path = database.Column(database.String(255), nullable=False)
-    video_subtitle = database.Column(database.String(255), nullable=False)
+class Video(data.Model):
+    video_id = data.Column(data.Integer, primary_key=True)
+    video_title = data.Column(data.String(100), nullable=False)
+    video_path = data.Column(data.String(255), nullable=False)
+    video_subtitle = data.Column(data.String(255), nullable=False)
     # video_date = db.Column(db.String(250), nullable=False)
-    user_id = database.Column(database.Integer, database.ForeignKey('user.user_id'))
+    user_id = data.Column(data.Integer, data.ForeignKey('user.user_id'))
 
 
 # Product Schema
@@ -82,7 +82,7 @@ class Video(database.Model):
 # Create Database
 with app.app_context():
     # db.drop_all()
-    database.create_all()
+    data.create_all()
 
 
 # #Create user
@@ -108,10 +108,10 @@ def register():
     _user_birthdate = _json['userBirthDate']
 
     new_user = User(_username, _email, _password, _user_image, _user_birthdate)
-    database.session.add(new_user)
-    database.session.commit()
+    data.session.add(new_user)
+    data.session.commit()
 
-    return "Data added successfully"
+    return "Data added successfully!!!!!"
 
 
 # Run server
