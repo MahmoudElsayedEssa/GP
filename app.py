@@ -111,7 +111,7 @@ def register():
     db.session.add(new_user)
     db.session.commit()
 
-    return "Data added successfully"
+    return "Data added successfully mahmoud"
 
 
 # Run server
