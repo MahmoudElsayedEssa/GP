@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow  # integrate with sql alchemy
+# from flask_marshmallow import Marshmallow  # integrate with sql alchemy
 import os
 
 from sqlalchemy import PrimaryKeyConstraint  # python module file paths
@@ -111,7 +111,7 @@ def register():
     db.session.add(new_user)
     db.session.commit()
 
-    return "Data added successfully"
+    return "Data added successfully.!"
 
 
 # Run server
